@@ -27,7 +27,47 @@ public class Node<F, C> {
     public final int[] childOffsets;
     private final Condition<F, C> condition;
     private int currentChildIndex;
+    public String valueType;
+    public boolean maxBidFlag = true;
+    public String valueNodeId = "";
 
+    public String getValueNodeId() {
+        return valueNodeId;
+    }
+
+    public void setValueNodeId(String valueNodeId) {
+        this.valueNodeId = valueNodeId;
+    }
+
+    public boolean isMaxBidFlag() {
+        return maxBidFlag;
+    }
+
+    public void setMaxBidFlag(boolean maxBidFlag) {
+        this.maxBidFlag = maxBidFlag;
+    }
+
+    /**
+     * Constructs an Node with the provided values.
+     *
+     * @param  feature the initial capacity of the list
+     * @param  value  the initial capacity of the list
+     * @param  isLeaf boolean flag indicating if node is a leaf
+     * @param  childOffsets offsets from the tree root of the children nodes
+     * @param  condition {@link Condition} condition that when evaluated will return the index of the child offset to
+     *                                    visit next
+     * @param valueType indicating the lead nodes value type
+     */
+    public Node(F feature, double value, boolean isLeaf, int[] childOffsets, Condition<F, C> condition,String valueType) {
+        this.feature = feature;
+        this.value = value;
+        this.isLeaf = isLeaf;
+        this.childOffsets = childOffsets;
+        this.condition = condition;
+        this.currentChildIndex = 0;
+        this.valueType = valueType;
+    }
+    
     /**
      * Constructs an Node with the provided values.
      *
@@ -46,6 +86,8 @@ public class Node<F, C> {
         this.condition = condition;
         this.currentChildIndex = 0;
     }
+    
+    
 
     public int nextNodeOffset(C features) {
         return childOffsets[condition.nextOffsetIndex(feature, features)];

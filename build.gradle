@@ -20,7 +20,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'com.staples-sparx'
-version = '0.20.3_SNAPSHOT'
+version = '0.20.6_SNAPSHOT'
 
 
 def isReleaseBuild
@@ -78,20 +78,20 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives jar
 
-    archives javadocJar
+   // archives javadocJar
     archives sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 uploadArchives {
     repositories {
-        mavenDeployer {
-            if (isReleaseBuild) {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-            }
+        /*mavenDeployer {
+            //if (isReleaseBuild) {
+            //    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            //}
 
             repository(url: sonatypeRepositoryUrl) {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
@@ -126,6 +126,11 @@ uploadArchives {
                     }
                 }
             }
+        }*/
+        mavenDeployer {
+            repository(url: "/tmp/")
+            pom.version = "0.20.3_SNAPSHOT"
+            pom.artifactId = 'Sequoia'
         }
     }
 }

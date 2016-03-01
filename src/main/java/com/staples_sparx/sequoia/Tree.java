@@ -37,6 +37,14 @@ public class Tree<F, C> {
         }
         return node.value;
     }
+    
+    public Node scoreTreeAndGetNode(C features) {
+        Node<F, C> node = nodes[0];
+        while (!node.isLeaf) {
+            node = nodes[node.nextNodeOffset(features)];
+        }
+        return node;
+    }
 
     public Tree<F, C> reduceToTree(C features, Set<F> missingFeatures) {
         List<Node<F, C>> subTreeNodes = new ArrayList<>();
